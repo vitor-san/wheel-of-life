@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      perspective="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Roda da Vida</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link
+      href="https://unpkg.com/tabulator-tables@6.2.5/dist/css/tabulator.min.css"
+      rel="stylesheet"
+    />
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/tabulator-tables@6.2.5/dist/js/tabulator.min.js"
+    ></script>
+  </head>
+  <body>
+    <div class="bg-blue-600 h-12 w-full flex items-center justify-center">
+      <h1 class="text-white text-3xl font-medium">Roda da Vida</h1>
+    </div>
+    <div class="flex items-center justify-center py-16 gap-16">
+      <div id="table"></div>
+      <div id="chart" class="flex w-1/2 items-center justify-center"></div>
+    </div>
+    <script>
+      const data = [
+        {
+          perspective: "Espiritualidade & Autorrealização",
+          score: 10,
+          weight: 1,
+        },
+        { perspective: "Saúde Física", score: 7, weight: 1 },
+        { perspective: "Saúde Mental", score: 10, weight: 1 },
+        { perspective: "Família & Amigos", score: 10, weight: 1 },
+        { perspective: "Vida Amorosa", score: 4, weight: 1 },
+        { perspective: "Trabalho & Carreira", score: 10, weight: 1 },
+        { perspective: "Dinheiro & Finanças", score: 8, weight: 1 },
+        {
+          perspective: "Aprendizado & Crescimento pessoal",
+          score: 10,
+          weight: 1,
+        },
+        { perspective: "Lazer", score: 10, weight: 1 },
+        { perspective: "Comunidade & Social", score: 10, weight: 1 },
+        { perspective: "Ambiente", score: 10, weight: 1 },
+      ];
+
+      const chart = new ApexCharts(document.querySelector("#chart"), {
+        chart: {
+          type: "polarArea",
+        },
+        series: data.map((p) => p.score),
+        labels: data.map((p) => p.perspective),
+        legend: {
+          show: true,
+          offsetY: 60,
+        },
+        fill: {
+          opacity: 0.8,
+        },
+      });
+      chart.render();
+
+      const table = new Tabulator("#table", {
+        data,
+        layout: "fitColumns",
+        addRowPos: "top",
+        movableColumns: true,
+        initialSort: [{ column: "name", dir: "asc" }],
+        columnDefaults: {
+          tooltip: true,
+        },
+        columns: [
+          {
+            title: "Perspectiva",
+            field: "perspective",
+            editor: "input",
+            width: 300,
+          },
+          { title: "Nota", field: "score", editor: "input", width: 100 },
+          { title: "Peso", field: "weight", editor: "input", width: 70 },
+        ],
+      });
+    </script>
+  </body>
+</html>
